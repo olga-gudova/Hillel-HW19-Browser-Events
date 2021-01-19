@@ -2,18 +2,14 @@ const $squares = document.querySelectorAll('.magical');
 
 let outerCount = 1;
 function outerCounter() {
-    return function() {
-        return outerCount++;
-    }
+    return () => { return outerCount++; }
 };
 const theOuterCounter = outerCounter();
 
 $squares.forEach(square => {
     let count = 1;
     function counter() {
-        return function() {
-            return count++;
-        }
+        return () => { return count++; } 
     };
     const theCounter = counter();
     
