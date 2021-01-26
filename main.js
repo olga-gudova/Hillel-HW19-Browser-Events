@@ -1,37 +1,35 @@
-const $squares = document.querySelectorAll('.magical');
+const $box = document.querySelector('.box');
+let count = 0;
 
-let outerCount = 1;
-function outerCounter() {
-    return () => { return outerCount++; }
-};
-const theOuterCounter = outerCounter();
+$box.addEventListener('click', function(e) {
+    count++;
+    let target = e.target.closest('.magical');
 
-$squares.forEach(square => {
-    let count = 1;
-    function counter() {
-        return () => { return count++; } 
-    };
-    const theCounter = counter();
+    if (!target) return;
     
-    square.addEventListener('click', function() {
-        let theCount = theCounter();
-
-        if (theCount % 3 === 1) {
-            square.classList.add('blue');
-            square.classList.remove('green');            
-            square.classList.remove('yellow');
-        } else if (theCount % 3 === 2) {
-            square.classList.add('green');        
-            square.classList.remove('yellow');    
-            square.classList.remove('blue');
-        } else if (theCount % 3 === 0) {
-            square.classList.add('yellow');            
-            square.classList.remove('blue');            
-            square.classList.remove('green');
-        };
-        square.style.order = theOuterCounter();
-    });
+    repaint(target);
+    move(target);
 });
+
+function move(el) {
+    el.style.order = count;
+}
+
+function repaint(el) {
+    if (el.classList.contains('blue')) {
+        el.classList.remove('blue');
+        el.classList.add('green');
+    } else if (el.classList.contains('green')) {
+        el.classList.remove('green');
+        el.classList.add('yellow');
+    } else if (el.classList.contains('yellow')) {
+        el.classList.remove('yellow');
+        el.classList.add('blue');
+    } else {
+        el.classList.add('blue');
+    }
+}
+
 
 function classToggle(element, classToToggle) {
     const $el = document.querySelector(element);
